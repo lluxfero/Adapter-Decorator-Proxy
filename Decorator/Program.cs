@@ -1,17 +1,20 @@
-﻿var announcement1 = new FireSafetyAnnouncement();
-Console.WriteLine(announcement1.Hang());
+var announcement1 = new FireSafetyAnnouncement();
+Console.WriteLine(announcement1.Hang()); 
+// Повешены правила "О пожарной безопасности.."
 Console.WriteLine();
 
 RedFrameAnnouncementDecorator decorator1 = new(announcement1);
 A4SheetAnnouncementDecorator decorator2 = new(decorator1);
-Console.WriteLine(decorator2.Hang());
+Console.WriteLine(decorator2.Hang()); 
+// Повешены правила "О пожарной безопасности.." в красной рамке формата А4
 
 var announcement2 = new AlarmAnnouncement();
 A4SheetAnnouncementDecorator decorator3 = new(announcement2);
-Console.WriteLine(decorator3.Hang());
+Console.WriteLine(decorator3.Hang()); 
+// Повешено объявление "Проверка сигнализации.." формата А4
 
-// Базовый интерфейс Компонента определяет поведение, которое изменяется
-// декораторами.
+
+// Базовый интерфейс Компонента определяет поведение, которое изменяется декораторами
 public abstract class Announcement
 {
     public string Name { get; set; }
@@ -35,7 +38,7 @@ class FireSafetyAnnouncement : Announcement
 }
 class AlarmAnnouncement : Announcement
 {
-    public AlarmAnnouncement() : base("Проверка сигнализации 15.05.2023..")
+    public AlarmAnnouncement() : base("Проверка сигнализации..")
     { }
     public override string Hang()
     {
@@ -45,7 +48,7 @@ class AlarmAnnouncement : Announcement
 // Базовый класс Декоратора следует тому же интерфейсу, что и другие
 // компоненты. Основная цель этого класса - определить интерфейс обёртки для
 // всех конкретных декораторов. Реализация кода обёртки по умолчанию может
-// включать в себя  поле для хранения завёрнутого компонента и средства его
+// включать в себя поле для хранения завёрнутого компонента и средства его
 // инициализации.
 abstract class Decorator : Announcement
 {
@@ -71,17 +74,12 @@ class RedFrameAnnouncementDecorator : Decorator
     {
     }
 
-    // Декораторы могут вызывать родительскую реализацию операции, вместо
-    // того, чтобы вызвать обёрнутый объект напрямую. Такой подход упрощает
-    // расширение классов декораторов.
     public override string Hang()
     {
         return $"{base.Hang()} в красной рамке";
     }
 }
 
-// Декораторы могут выполнять своё поведение до или после вызова обёрнутого
-// объекта.
 class A4SheetAnnouncementDecorator : Decorator
 {
     public A4SheetAnnouncementDecorator(Announcement component) : base(component)
