@@ -1,10 +1,10 @@
-﻿FahrenheitThermometer adaptee = new();
+FahrenheitThermometer adaptee = new();
 IRussianThermometer thermometer = new FromFahToCelAdapter(adaptee);
 
 Console.WriteLine(thermometer.GetCelsius());
 
 
-// Интерфейс, с которым может работать клиент
+// Интерфейс, с которым может работать клиентский
 public interface IRussianThermometer
 {
     int GetCelsius();
@@ -33,6 +33,9 @@ class FromFahToCelAdapter : IRussianThermometer
 
     public int GetCelsius()
     {
-        return (int)Math.Round((this._adapteeFahrenheitThermometer.GetFahrenheit() - 32) * 5 / (double)9);
+        int value = this._adapteeFahrenheitThermometer.GetFahrenheit();
+        Console.WriteLine($"* градусов в Фаренгейтах: {value}\n");
+        return (int)Math.Round((value - 32) * 5 / (double)9);
     }
 }
+
