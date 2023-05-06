@@ -4,7 +4,7 @@ IRussianThermometer thermometer = new FromFahToCelAdapter(adaptee);
 Console.WriteLine(thermometer.GetCelsius());
 
 
-// Интерфейс, с которым может работать клиентский
+// Интерфейс, с которым может работать клиент
 public interface IRussianThermometer
 {
     int GetCelsius();
